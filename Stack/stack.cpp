@@ -88,7 +88,7 @@ class stack{
 
 void push(int data){
     Node* temp = new Node(data);
-    if(!temp){
+    if(!temp){ // heap memory is exhausted
         cout<<"stack overflow"<<endl;
         return;
     }
