@@ -21,6 +21,7 @@ using namespace std;
 //         else{
 //             cout<<"stack overflow"<<endl;
 //         }
+//         return;
 //     }
 //     void pop(){
 //         if(top>=0){
