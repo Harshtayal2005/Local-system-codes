@@ -3,6 +3,10 @@
 using namespace std;
 
 void DFS(vector<vector<int>>& graph, int vertex, vector<bool>& visited) {
+    if(visited[vertex] == true){
+        return;
+    }
+    
     cout << vertex << " ";
     visited[vertex] = true;
 
