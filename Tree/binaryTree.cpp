@@ -58,28 +58,52 @@ Node* buildTree(Node* root){
     root->right = buildTree(root->right);
     return root;
 }
-void levelOrderTraversal(Node* root){
-	queue<Node*> q;
+// void levelOrderTraversal(Node* root){
+// 	queue<Node*> q;
+// 	q.push(root);
+// 	q.push(NULL);
+// 	while(!q.empty()){
+// 		Node* temp = q.front();
+// 		q.pop();
+// 		if(temp==NULL){
+// 			cout<<endl;
+// 			if(!q.empty()){
+// 				q.push(NULL);
+// 			}
+// 		}
+// 		else{
+// 			cout<<temp->data<<" ";
+// 		if(temp->left){
+// 			q.push(temp->left);
+// 		}
+// 		if(temp->right){
+// 			q.push(temp->right);
+// 		}
+// 		}
+// 	}
+// }
+void levelOrderTraversal(Node* root) {
+	queue<Node *> q;
 	q.push(root);
-	q.push(NULL);
-	while(!q.empty()){
-		Node* temp = q.front();
-		q.pop();
-		if(temp==NULL){
-			cout<<endl;
-			if(!q.empty()){
-				q.push(NULL);
+
+	while(!q.empty()) {
+		int N = q.size();
+
+		while(N--) {
+			Node *temp = q.front();
+			q.pop();
+			cout << temp->data << " ";
+
+			if(temp->left) {
+				q.push(temp->left);
+			}
+
+			if(temp->right) {
+				q.push(temp->right);
 			}
 		}
-		else{
-			cout<<temp->data<<" ";
-		if(temp->left){
-			q.push(temp->left);
-		}
-		if(temp->right){
-			q.push(temp->right);
-		}
-		}
+
+		cout << endl;
 	}
 }
 void inOrderTraversal(Node* root){
