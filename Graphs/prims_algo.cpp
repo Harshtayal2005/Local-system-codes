@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <queue>
 using namespace std;
 
 vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
@@ -23,19 +24,15 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
 
     key[1] = 0;
 
-    for (int i = 0; i < n; i++)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, 1});
+
+    while (!pq.empty())
     {
-        int mini = INT_MAX;
         int u;
 
-        for (int v = 1; v <= n; v++)
-        {
-            if (!mst[v] && key[v] < mini)
-            {
-                u = v;
-                mini = key[v];
-            }
-        }
+        u = pq.top().second;
+        pq.pop();
 
         mst[u] = true;
 
@@ -45,6 +42,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
             {
                 key[v.first] = v.second;
                 parent[v.first] = u;
+                pq.push({v.second, v.first});
             }
         }
     }
@@ -59,7 +57,8 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
     return res;
 }
 
-int main() {
+int main()
+{
     vector<pair<pair<int, int>, int>> g = {
         {{1, 2}, 1},
         {{1, 3}, 2},
@@ -67,10 +66,10 @@ int main() {
         {{2, 4}, 4},
         {{3, 4}, 5},
         {{3, 5}, 6},
-        {{4, 5}, 7}
-    };
+        {{4, 5}, 7}};
     vector<pair<pair<int, int>, int>> res = calculatePrimsMST(5, 7, g);
-    for (auto p : res) {
+    for (auto p : res)
+    {
         cout << p.first.first << " " << p.first.second << " " << p.second << endl;
     }
     return 0;
