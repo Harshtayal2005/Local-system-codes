@@ -28,8 +28,6 @@ int findParent(int node, vector<int> &parent)
 
 void unionSet(int u, int v, vector<int> &parent, vector<int> &rank)
 {
-    u = findParent(u, parent);
-    v = findParent(v, parent);
 
     if (rank[u] < rank[v])
     {
