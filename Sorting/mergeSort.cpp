@@ -1,116 +1,70 @@
-#include<iostream>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-void merge(int arr[], int si, int ei, int mid){
-    int i = si, j = mid+1, k = 0;
-    int m = mid-si+1;
-    int n = ei-mid;
-    int *sortedArray = new int[m+n];
-    
-    while(i<=mid && j<=ei){
-        if(arr[i]<=arr[j]){
-            sortedArray[k] = arr[i];
-            i++;
-            k++;
+void merge(vector<int> &arr, int low, int mid, int high)
+{
+    vector<int> temp;    // temporary array
+    int left = low;      // starting index of left half of arr
+    int right = mid + 1; // starting index of right half of arr
+
+    // storing elements in the temporary array in a sorted manner//
+
+    while (left <= mid && right <= high)
+    {
+        if (arr[left] <= arr[right])
+        {
+            temp.push_back(arr[left]);
+            left++;
         }
-        else if(arr[i]>arr[j]){
-            sortedArray[k] = arr[j];
-            j++;
-            k++;
+        else
+        {
+            temp.push_back(arr[right]);
+            right++;
         }
     }
-    while(i<=mid){
-        sortedArray[k] = arr[i];
-        i++;
-        k++;
+
+    // if elements on the left half are still left //
+
+    while (left <= mid)
+    {
+        temp.push_back(arr[left]);
+        left++;
     }
-    while(j<=ei){
-        sortedArray[k] = arr[j];
-        j++;
-        k++;
+
+    //  if elements on the right half are still left //
+    while (right <= high)
+    {
+        temp.push_back(arr[right]);
+        right++;
     }
-    for(int idx = 0 ; idx<(ei-si+1); idx++){
-        arr[idx+si] = sortedArray[idx];
+
+    // transfering all elements from temporary to arr //
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp[i - low];
     }
-    delete[] sortedArray;
 }
 
-void mergeSort(int arr[], int si, int ei){
-    if(si>=ei){
-        return ;
-    }
-    int mid = si + (ei - si)/2;
-    // left sorting
-    mergeSort(arr, si, mid);
-    //right sorting
-    mergeSort(arr, mid+1, ei);
-    merge(arr, si, ei, mid);
+void mergeSort(vector<int> &arr, int low, int high)
+{
+    if (low >= high)
+        return;
+    int mid = low + (high - low) / 2;
+    mergeSort(arr, low, mid);      // left half
+    mergeSort(arr, mid + 1, high); // right half
+    merge(arr, low, mid, high);    // merging sorted halves
 }
 
-
-int main(){
-    int arr[]= {5,5,4,3,2,1};
-    int n = 6;
-    mergeSort(arr, 0, n-1);
-    for(int i=0; i<n; i++){
-        cout<<arr[i]<<" ";
-    } cout<<endl;
+int main()
+{
+    vector<int> a = {5, 4, 3, 2, 1};
+    int n = a.size();
+    mergeSort(a, 0, n - 1);
+    for (int i : a)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
     return 0;
 }
-//   OR
-// #include<iostream>
-// #include<vector>
-// using namespace std;
-
-// void merge(int arr[], int si, int ei){
-//     int mid = si+(ei-si)/2;
-//     int n = mid-si+1;
-//     int m = ei-mid;
-//     int *leftArr = new int[n];
-//     int *rightArr = new int[m];
-//     int mainArrIdx=si;
-//     for(int i=0; i<n; i++){
-//         leftArr[i]=arr[mainArrIdx++];
-//     }
-//     mainArrIdx=mid+1;
-//     for(int j=0; j<m; j++){
-//         rightArr[j]=arr[mainArrIdx++];
-//     }
-//     int i=0, j=0;
-//     int mainArr = si;
-//     while(i<n && j<m){
-//         if(leftArr[i]<=rightArr[j]){
-//             arr[mainArr++]=leftArr[i++];
-//         }
-//         else{
-//             arr[mainArr++]=rightArr[j++];
-//         }
-//     }
-//     while(i<n){
-//         arr[mainArr++]=leftArr[i++];
-//     }
-//     while(j<m){
-//         arr[mainArr++]=rightArr[j++];
-//     }
-    
-// }
-
-// void mergeSort(int arr[], int si, int ei){
-//     if(si>=ei){
-//         return ;
-//     }
-//     int mid = si+(ei-si)/2;
-//     mergeSort(arr, si, mid);
-//     mergeSort(arr, mid+1, ei);
-//     merge(arr, si, ei); 
-// }
-// int main(){
-//     int arr[]={4,3,6,7,1,2};
-//     int n = 6;
-//     mergeSort(arr, 0, n-1);
-//     for(int ele:arr){
-//         cout<<ele<<" ";
-//     }
-//     cout<<endl;
-//     return 0;
-// }
