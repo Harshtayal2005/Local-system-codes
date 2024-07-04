@@ -6,6 +6,13 @@ class Node
 {
 public:
     Node *links[26];
+    Node()
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            links[i] = NULL;
+        }
+    }
     bool flag = false;
     bool containsKey(char ch)
     {
